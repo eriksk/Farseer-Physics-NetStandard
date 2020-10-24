@@ -22,10 +22,10 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore src/FarseerPhysics.MonoGame.NetStandard
+      run: dotnet restore src/FarseerPhysics.MonoGame.NetStandard.csproj
     - name: Build
-      run: dotnet build src/FarseerPhysics.MonoGame.NetStandard --configuration Release --no-restore
+      run: dotnet build src/FarseerPhysics.MonoGame.NetStandard.csproj --configuration Release --no-restore
     - name: Pack
-      run: dotnet pack src/FarseerPhysics.MonoGame.NetStandard -p:PackageVersion=1.0.$GITHUB_RUN_NUMBER --configuration Release --no-restore
+      run: dotnet pack src/FarseerPhysics.MonoGame.NetStandard.csproj -p:PackageVersion=1.0.$GITHUB_RUN_NUMBER --configuration Release --no-restore
     - name: Publish
       run: dotnet nuget push src/FarseerPhysics.MonoGame.NetStandard/bin/Release/FarseerPhysics.MonoGame.NetStandard.*.nupkg --source ${{ secrets.NUGET_FEED }} --api-key ${{ secrets.NUGET_API_KEY }}
