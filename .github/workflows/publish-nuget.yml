@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Publish Nuget Package
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore src/FarseerPhysics.MonoGame.NetStandard.csproj
+    - name: Build
+      run: dotnet build src/FarseerPhysics.MonoGame.NetStandard.csproj --configuration Release --no-restore
+    - name: Pack
+      run: dotnet pack src/FarseerPhysics.MonoGame.NetStandard.csproj -p:PackageVersion=1.0.$GITHUB_RUN_NUMBER --configuration Release --no-restore
+    - name: Publish
+      run: dotnet nuget push src/bin/Release/FarseerPhysics.MonoGame.NetStandard.*.nupkg --source ${{ secrets.NUGET_FEED }} --api-key ${{ secrets.NUGET_API_KEY }}
