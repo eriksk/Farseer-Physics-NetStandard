@@ -11,7 +11,6 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Dynamics.Joints;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace FarseerPhysics.DebugView
@@ -20,7 +19,7 @@ namespace FarseerPhysics.DebugView
     /// A debug view shows you what happens inside the physics engine. You can view
     /// bodies, joints, fixtures and more.
     /// </summary>
-    public class DebugViewXNA : DebugViewBase, IDisposable
+    public class MonoGameDebugView : DebugViewBase, IDisposable
     {
         //Drawing
         private PrimitiveBatch _primitiveBatch;
@@ -69,7 +68,7 @@ namespace FarseerPhysics.DebugView
         public const int CircleSegments = 32;
 #endif
 
-        public DebugViewXNA(World world)
+        public MonoGameDebugView(World world)
             : base(world)
         {
             world.ContactManager.PreSolve += PreSolve;
@@ -776,13 +775,13 @@ namespace FarseerPhysics.DebugView
             RenderDebugData(ref projection, ref view);
         }
 
-        public void LoadContent(GraphicsDevice device, ContentManager content)
+        public void LoadContent(GraphicsDevice device, SpriteFont font)
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             _device = device;
             _batch = new SpriteBatch(_device);
             _primitiveBatch = new PrimitiveBatch(_device, 1000);
-            _font = content.Load<SpriteFont>("Font");
+            _font = font;
             _stringData = new List<StringData>();
 
             _localProjection = Matrix.CreateOrthographicOffCenter(0f, _device.Viewport.Width, _device.Viewport.Height, 0f, 0f, 1f);
