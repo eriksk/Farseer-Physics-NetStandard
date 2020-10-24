@@ -28,4 +28,4 @@ jobs:
     - name: Pack
       run: dotnet pack src/FarseerPhysics.MonoGame.NetStandard.csproj -p:PackageVersion=1.0.$GITHUB_RUN_NUMBER --configuration Release --no-restore
     - name: Publish
-      run: dotnet nuget push src/bin/Release/netstandard2.0/FarseerPhysics.MonoGame.NetStandard.*.nupkg --source ${{ secrets.NUGET_FEED }} --api-key ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push src/bin/Release/FarseerPhysics.MonoGame.NetStandard.*.nupkg --source ${{ secrets.NUGET_FEED }} --api-key ${{ secrets.NUGET_API_KEY }}
